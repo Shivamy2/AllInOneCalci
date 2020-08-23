@@ -1,3 +1,4 @@
+import 'package:AllInOneCalci/route_generator.dart';
 import 'package:flutter/material.dart';
 
 import 'customAppBar.dart';
@@ -5,7 +6,8 @@ import 'customAppBar.dart';
 void main() {
   runApp(MaterialApp(
     title: 'All In One Calci',
-    home: AppLayout(),
+    initialRoute: '/',
+    onGenerateRoute: RouteGenerator.generateRoute,
     debugShowCheckedModeBanner: false,
   ));
 }
@@ -16,7 +18,7 @@ class AppLayout extends StatelessWidget {
     var AppBarHeight = MediaQuery.of(context).size.height;
     var AppBarWidth = MediaQuery.of(context).size.width;
 
-    Widget CustomCardView(String titleString, String bodyString) {
+    Widget CustomCardView(String titleString, String bodyString, String path) {
       return Container(
         decoration: new BoxDecoration(
             color: Colors.cyan[200],
@@ -54,7 +56,7 @@ class AppLayout extends StatelessWidget {
                               BorderRadius.all(Radius.circular(20.0))),
                       color: Colors.redAccent,
                       elevation: 10.0,
-                      splashColor: Colors.cyan[200],
+                      splashColor: Colors.redAccent,
                       child: Container(
                         width: 60.0,
                         child: Row(
@@ -71,7 +73,7 @@ class AppLayout extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        print('Material Button pressed');
+                        Navigator.of(context).pushNamed(path);
                       }),
                 ),
               ],
@@ -111,12 +113,12 @@ class AppLayout extends StatelessWidget {
                 children: [
                   Column(
                     children: [
-                      CustomCardView(
-                          'BMI Calculator', 'This is BMI Calculator'),
-                      CustomCardView(
-                          'Age Calculator', 'This is Age Calculator'),
-                      CustomCardView(
-                          'Love Calculator', 'This is Love Calculator'),
+                      CustomCardView('BMI Calculator', 'This is BMI Calculator',
+                          '/BMICalcUI'),
+                      CustomCardView('Age Calculator', 'This is Age Calculator',
+                          '/AgeCalcUI'),
+                      CustomCardView('Love Calculator',
+                          'This is Love Calculator', '/LoveCalUI'),
                     ],
                   ),
                 ],
