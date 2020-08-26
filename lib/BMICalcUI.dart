@@ -1,6 +1,8 @@
 import 'package:AllInOneCalci/customAppBar.dart';
 import 'package:flutter/material.dart';
 
+import 'CustomTextField.dart';
+
 class BMICalcUI extends StatefulWidget {
   @override
   _BMICalcUIState createState() => _BMICalcUIState();
@@ -10,18 +12,18 @@ class _BMICalcUIState extends State<BMICalcUI> {
   TextEditingController myController = TextEditingController();
   TextEditingController myController2 = TextEditingController();
 
-  double Result;
-  double BMIHeight;
-  double BMIWidth;
-  double Result_round;
-  String condition = '';
-
   @override
   void dispose() {
     myController.dispose();
     myController2.dispose();
     super.dispose();
   }
+
+  double Result;
+  double BMIHeight;
+  double BMIWidth;
+  double Result_round;
+  String condition = '';
 
   double BMIResult() {
     BMIHeight = double.parse(myController.text);
@@ -37,43 +39,6 @@ class _BMICalcUIState extends State<BMICalcUI> {
         condition = 'Overweight';
       }
     });
-  }
-
-  Widget CustomTextField(
-      String LabelTextField,
-      String HelperTextField,
-      Color ColorBorder,
-      Color ColorField,
-      Color ColorCursor,
-      var TextController) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 18.0),
-      child: TextField(
-        cursorColor: ColorCursor,
-        style: TextStyle(
-          color: ColorField,
-        ),
-        keyboardType: TextInputType.number,
-        textInputAction: TextInputAction.next,
-        controller: TextController,
-        decoration: InputDecoration(
-            enabledBorder: new OutlineInputBorder(
-                borderSide: BorderSide(width: 1.5, color: ColorBorder)),
-            border: OutlineInputBorder(
-                borderSide: new BorderSide(color: Colors.cyan[200]),
-                borderRadius: new BorderRadius.all(Radius.circular(20.0))),
-            helperText: HelperTextField,
-            labelText: LabelTextField,
-            labelStyle: TextStyle(
-              color: Colors.black26,
-              fontSize: 20.0,
-              fontFamily: 'DancingScript',
-            ),
-            icon: Icon(
-              Icons.apps,
-            )),
-      ),
-    );
   }
 
   Widget CustomButton() {
@@ -115,7 +80,7 @@ class _BMICalcUIState extends State<BMICalcUI> {
             Padding(
               padding: const EdgeInsets.only(top: 18.0),
               child: Text(
-                'All In One Cali',
+                'BMI Calculator',
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 35.0,
