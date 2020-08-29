@@ -103,6 +103,7 @@ class _BMICalcUIState extends State<BMICalcUI> {
                   Colors.cyan[200],
                   Colors.redAccent,
                   Colors.redAccent,
+                  myController,
                   myController),
               Padding(
                 padding: const EdgeInsets.all(18.0),
@@ -112,6 +113,7 @@ class _BMICalcUIState extends State<BMICalcUI> {
                     Colors.redAccent,
                     Colors.cyan,
                     Colors.cyan[200],
+                    myController2,
                     myController2),
               ),
               Padding(

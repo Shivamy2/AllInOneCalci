@@ -7,8 +7,9 @@ class CustomTextField extends StatefulWidget {
   Color ColorField;
   Color ColorCursor;
   var TextController;
+  TextEditingController Tec;
   CustomTextField(this.LabelTextField, this.HelperTextField, this.ColorBorder,
-      this.ColorField, this.ColorCursor, this.TextController);
+      this.ColorField, this.ColorCursor, this.TextController, this.Tec);
 
   @override
   _CustomTextFieldState createState() => _CustomTextFieldState();
@@ -24,10 +25,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
         style: TextStyle(
           color: widget.ColorField,
         ),
-        keyboardType: TextInputType.number,
         textInputAction: TextInputAction.next,
         controller: widget.TextController,
         decoration: InputDecoration(
+            suffixIcon: IconButton(
+              icon: Icon(Icons.clear),
+              onPressed: () {
+                widget.Tec.clear();
+              },
+            ),
             enabledBorder: new OutlineInputBorder(
                 borderSide: BorderSide(width: 1.5, color: widget.ColorBorder)),
             border: OutlineInputBorder(
