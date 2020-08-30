@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:AllInOneCalci/CustomTextField.dart';
 import 'package:AllInOneCalci/Post.dart';
+import 'package:AllInOneCalci/apiKeys.dart';
 import 'package:AllInOneCalci/customAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -43,6 +44,7 @@ class CustomFetchData extends StatefulWidget {
 }
 
 class _CustomFetchDataState extends State<CustomFetchData> {
+  ApiKeys apis = new ApiKeys();
   int percentage = 0;
   String result = "";
 
@@ -54,8 +56,7 @@ class _CustomFetchDataState extends State<CustomFetchData> {
         'https://love-calculator.p.rapidapi.com/getPercentage?fname=$name1&sname=$name2',
         headers: {
           'x-rapidapi-host': 'love-calculator.p.rapidapi.com',
-          'x-rapidapi-key':
-              '84e84770b9msh59a96d8b03cb4aap1615a1jsn1cd0efaeedfe',
+          'x-rapidapi-key': apis.keyHost,
         });
 
     if (response.statusCode == 200) {
@@ -129,6 +130,32 @@ class _CustomFetchDataState extends State<CustomFetchData> {
     );
   }
 
+  showAlertDialog(BuildContext context) {
+    AlertDialog alertD = new AlertDialog(
+      content: new Row(
+        children: [
+          CircularProgressIndicator(),
+          Container(
+            margin: const EdgeInsets.only(left: 5.0),
+            child: Text(
+              'Loading...',
+              style: TextStyle(
+                color: Colors.redAccent,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return alertD;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     bool visibilitySwitch = false;
@@ -161,11 +188,13 @@ class _CustomFetchDataState extends State<CustomFetchData> {
                     color: Colors.white,
                   ),
                 ),
-                onPressed: () {
-                  _getData(
+                onPressed: () async {
+                  showAlertDialog(context);
+                  await _getData(
                     name1: firstNameController.text,
                     name2: secondNameController.text,
                   );
+                  Navigator.pop(context);
                 }),
           ),
           Text(
