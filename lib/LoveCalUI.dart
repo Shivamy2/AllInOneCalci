@@ -70,66 +70,6 @@ class _CustomFetchDataState extends State<CustomFetchData> {
     }
   }
 
-  Widget ErrorDesign() {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Container(
-        alignment: Alignment.center,
-        child: Text(
-          'Error: Kindly Connect to Internet',
-          style: TextStyle(
-            color: Colors.redAccent,
-            fontFamily: 'DancingScript',
-            fontSize: 40.0,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget FetchedCalculationValues() {
-    return Column(
-      children: [
-        Container(
-            child: FutureBuilder<Post>(
-                future: _getData(),
-                builder: (BuildContext context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
-                  } else {
-                    if (snapshot.hasError) {
-                      return Container(
-                        child: ErrorDesign(),
-                      );
-                    } else {
-                      return Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Column(
-                          children: [
-                            Text('Percentage is $percentage %',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                )),
-                            Text('Result is: $result',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                )),
-                          ],
-                        ),
-                      );
-                    }
-                  }
-                })),
-      ],
-    );
-  }
-
   showAlertDialog(BuildContext context) {
     AlertDialog alertD = new AlertDialog(
       content: new Row(
@@ -154,6 +94,38 @@ class _CustomFetchDataState extends State<CustomFetchData> {
         return alertD;
       },
     );
+  }
+
+  bool isLoaded = false;
+  _getText() {
+    if (isLoaded) {
+      return Column(
+        children: [
+          Text(
+            'Your Score Is: $percentage%',
+            style: TextStyle(
+              color: Colors.redAccent,
+              fontSize: 25.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(18.0),
+            child: Text(
+              '$result',
+              style: TextStyle(
+                color: Colors.redAccent,
+                fontFamily: 'DancingScript',
+                fontSize: 30.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      );
+    } else {
+      return Container();
+    }
   }
 
   @override
@@ -195,28 +167,12 @@ class _CustomFetchDataState extends State<CustomFetchData> {
                     name2: secondNameController.text,
                   );
                   Navigator.pop(context);
+                  setState(() {
+                    isLoaded = true;
+                  });
                 }),
           ),
-          Text(
-            'Your Score Is: $percentage%',
-            style: TextStyle(
-              color: Colors.redAccent,
-              fontSize: 25.0,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(18.0),
-            child: Text(
-              '$result',
-              style: TextStyle(
-                color: Colors.redAccent,
-                fontFamily: 'DancingScript',
-                fontSize: 30.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
+          _getText(),
         ],
       ),
     );
